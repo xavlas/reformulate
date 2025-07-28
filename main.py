@@ -29,7 +29,9 @@ authenticator = stauth.Authenticate(
     auth_config['cookie']['expiry_days']
 )
 
-name, auth_status, username = authenticator.login("Connexion", "main")
+
+name, auth_status, username = authenticator.login("main")
+
 
 if auth_status:
     authenticator.logout("Se déconnecter", "sidebar")
