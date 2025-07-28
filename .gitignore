@@ -1,0 +1,12 @@
+# Ignore Logs
+logs
+# Ignore config
+configs/default.json
+# Ignore __pycache__
+__pycache__
+# Ignore .vscode
+.vscode
+# Ignore secrets.toml
+.streamlit/secrets.toml
+# Ignore recipe_recommendations
+recipe_recommendations
