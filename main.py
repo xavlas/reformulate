@@ -30,7 +30,14 @@ authenticator = stauth.Authenticate(
 )
 
 
-name, auth_status, username = authenticator.login("main")
+
+login_info = authenticator.login("main")
+st.write(login_info)
+
+name = login_info['name']
+auth_status = login_info['authentication_status']
+username = login_info['username']
+
 
 
 if auth_status:
