@@ -8,9 +8,9 @@ auth_config = {
     'credentials': {
         'usernames': {
             'xavier': {
-                'name': st.secrets[users]["name"],
-                'email': st.secrets[users]["email"],
-                'password': st.secrets[users]["password"],
+                'name': st.secrets.db_credentials.name,
+                'email': st.secrets.db_credentials.email,
+                'password': st.secrets.db_credentials.password,
             }
         }
     },
