@@ -34,12 +34,6 @@ authenticator = stauth.Authenticate(
 login_info = authenticator.login("main")
 st.write(login_info)
 
-name = login_info['name']
-auth_status = login_info['authentication_status']
-username = login_info['username']
-
-
-
 if auth_status:
     authenticator.logout("Se déconnecter", "sidebar")
     st.sidebar.success(f"Connecté en tant que {name}")
