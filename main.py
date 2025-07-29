@@ -28,7 +28,7 @@ auth_config = {
 }
 
 # Authentification
-authenticator = Authenticate(
+authenticator = stauth.Authenticate(
     config['credentials'],
     config['cookie']['name'],
     config['cookie']['key'],
