@@ -2,6 +2,11 @@ import streamlit as st
 import streamlit_authenticator as stauth
 import logging
 
+import yaml
+from yaml.loader import SafeLoader
+with open('../config.yaml') as file:
+    config = yaml.load(file, Loader=SafeLoader)
+
 logging.basicConfig(level=logging.INFO)
 
 # Lecture des secrets
@@ -23,28 +28,25 @@ auth_config = {
 }
 
 # Authentification
-authenticator = stauth.Authenticate(
-    auth_config['credentials'],
-    auth_config['cookie']['name'],
-    auth_config['cookie']['key'],
-    auth_config['cookie']['expiry_days']
+authenticator = Authenticate(
+    config['credentials'],
+    config['cookie']['name'],
+    config['cookie']['key'],
+    config['cookie']['expiry_days'],
+    config['preauthorized']
 )
 
-# Login et extraction des résultats (version compatible avec v0.1 et v0.2+)
-login_result = authenticator.login("main")
-st.write("Résultat authenticator.login:", login_result)
-if isinstance(login_result, tuple) and len(login_result) == 3:
-    name, auth_status, username = login_result
-    logging.info("login 3")
-elif isinstance(login_result, tuple) and len(login_result) == 2:
-    name, auth_status = login_result
-    logging.info("login 2")
-    username = None
-else:
-    logging.info("login 0")
-    name = auth_status = username = None
-
+name, authentication_status, username = authenticator.login('Login', 'main')
 st.write(f"name: {name}, auth_status: {auth_status}, username: {username}")
+
+if st.session_state["authentication_status"]:
+    authenticator.logout('Logout', 'main')
+    st.write(f'Welcome *{st.session_state["name"]}*')
+    st.title('Some content')
+elif st.session_state["authentication_status"] == False:
+    st.error('Username/password is incorrect')
+elif st.session_state["authentication_status"] == None:
+    st.warning('Please enter your username and password')
 
 if auth_status is True:
     authenticator.logout("Se déconnecter", "sidebar")
