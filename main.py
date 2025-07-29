@@ -7,8 +7,7 @@ st.title("Chat Assistant LogIn")
 
 if st.session_state["login"]:
     st.success("LogIn Successfull")
-    st.subheader('Please visit the chatbot page!')
-    # Ou afficher directement le contenu du chatbot ici
+    st.switch_page("chatbot.py")  # <-- Redirection ici (à ajuster selon le chemin de ta page)
 else:
     password = st.text_input("Please enter the password", disabled=st.session_state.login, type="password")
     if st.button("LogIn"):
@@ -19,7 +18,7 @@ else:
                 st.session_state.login = True
                 st.toast("Login Successful 🤩")
                 st.success("LogIn Successfull")
-                st.experimental_rerun()  # <-- Rafraîchit la page, donc affiche la partie "connecté"
+                st.switch_page("chatbot.py")  # <-- Redirection ici aussi après login
             else:
                 st.toast("Incorrect Password 😶")
                 st.error('Incorrect Password', icon = "🚨")
