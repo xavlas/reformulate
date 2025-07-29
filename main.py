@@ -1,5 +1,3 @@
-
-
 import streamlit as st
 import streamlit_authenticator as stauth
 
@@ -29,27 +27,20 @@ authenticator = stauth.Authenticate(
     auth_config['cookie']['expiry_days']
 )
 
-result = authenticator.login("main")
-st.write("Résultat login:", result)
-if isinstance(result, tuple) and len(result) == 2:
-    name, auth_status = result
+# Login et extraction des résultats (version compatible avec v0.1 et v0.2+)
+login_result = authenticator.login("main")
+st.write("Résultat authenticator.login:", login_result)
+if isinstance(login_result, tuple) and len(login_result) == 3:
+    name, auth_status, username = login_result
+elif isinstance(login_result, tuple) and len(login_result) == 2:
+    name, auth_status = login_result
     username = None
-elif isinstance(result, tuple) and len(result) == 3:
-    name, auth_status, username = result
 else:
     name = auth_status = username = None
 
 st.write(f"name: {name}, auth_status: {auth_status}, username: {username}")
 
-if auth_status:
-    authenticator.logout("Se déconnecter", "sidebar")
-    st.sidebar.success(f"Connecté en tant que {name}")
-elif auth_status is False:
-    st.error("Nom d'utilisateur ou mot de passe incorrect")
-elif auth_status is None:
-    st.warning("Veuillez entrer vos identifiants")
-
-if auth_status:
+if auth_status is True:
     authenticator.logout("Se déconnecter", "sidebar")
     st.sidebar.success(f"Connecté en tant que {name}")
 
@@ -72,7 +63,6 @@ if auth_status:
             result = generate_message(user_input, tone)
             st.subheader("Message généré :")
             st.code(result, language="markdown")
-
 elif auth_status is False:
     st.error("Nom d'utilisateur ou mot de passe incorrect.")
 elif auth_status is None:
