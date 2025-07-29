@@ -39,6 +39,16 @@ elif isinstance(result, tuple) and len(result) == 3:
 else:
     name = auth_status = username = None
 
+st.write(f"name: {name}, auth_status: {auth_status}, username: {username}")
+
+if auth_status:
+    authenticator.logout("Se déconnecter", "sidebar")
+    st.sidebar.success(f"Connecté en tant que {name}")
+elif auth_status is False:
+    st.error("Nom d'utilisateur ou mot de passe incorrect")
+elif auth_status is None:
+    st.warning("Veuillez entrer vos identifiants")
+
 if auth_status:
     authenticator.logout("Se déconnecter", "sidebar")
     st.sidebar.success(f"Connecté en tant que {name}")
