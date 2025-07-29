@@ -18,7 +18,7 @@ else:
                 st.session_state.login = True
                 st.toast("Login Successful 🤩")
                 st.success("LogIn Successfull")
-                st.switch_page("chatbot.py")  # <-- Redirection ici aussi après login
+                st.switch_page("pages/chatbot.py")  # <-- Redirection ici aussi après login
             else:
                 st.toast("Incorrect Password 😶")
                 st.error('Incorrect Password', icon = "🚨")
