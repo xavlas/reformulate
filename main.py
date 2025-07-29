@@ -8,9 +8,9 @@ auth_config = {
     'credentials': {
         'usernames': {
             'xavier': {
-                'name': st.secrets.users.name,
-                'email': st.secrets.users.email,
-                'password': st.secrets.users.password,
+                'name': st.secrets["users"]["name"],
+                'email': st.secrets["users"]["email"],
+                'password': st.secrets["users"]["password"],
             }
         }
     },
@@ -29,10 +29,8 @@ authenticator = stauth.Authenticate(
     auth_config['cookie']['expiry_days']
 )
 
-
-
-login_info = authenticator.login("main")
-st.write(login_info)
+name, auth_status, username = authenticator.login("main")
+st.write(f"name: {name}, auth_status: {auth_status}, username: {username}")
 
 if auth_status:
     authenticator.logout("Se déconnecter", "sidebar")
