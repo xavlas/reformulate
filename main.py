@@ -1,6 +1,8 @@
 import streamlit as st
 import streamlit_authenticator as stauth
 
+logging.basicConfig(level=logging.INFO)
+
 # Lecture des secrets
 auth_config = {
     'credentials': {
@@ -32,10 +34,13 @@ login_result = authenticator.login("main")
 st.write("Résultat authenticator.login:", login_result)
 if isinstance(login_result, tuple) and len(login_result) == 3:
     name, auth_status, username = login_result
+    logging.info("login 3")
 elif isinstance(login_result, tuple) and len(login_result) == 2:
     name, auth_status = login_result
+    logging.info("login 2")
     username = None
 else:
+    logging.info("login 0")
     name = auth_status = username = None
 
 st.write(f"name: {name}, auth_status: {auth_status}, username: {username}")
