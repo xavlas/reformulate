@@ -29,8 +29,15 @@ authenticator = stauth.Authenticate(
     auth_config['cookie']['expiry_days']
 )
 
-name, auth_status = authenticator.login("main")
-st.write(f"name: {name}, auth_status: {auth_status}")
+result = authenticator.login("main")
+st.write("Résultat login:", result)
+if isinstance(result, tuple) and len(result) == 2:
+    name, auth_status = result
+    username = None
+elif isinstance(result, tuple) and len(result) == 3:
+    name, auth_status, username = result
+else:
+    name = auth_status = username = None
 
 if auth_status:
     authenticator.logout("Se déconnecter", "sidebar")
